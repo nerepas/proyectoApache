@@ -42,4 +42,4 @@ Para comprobar el index.html usaremos *localhost*. Nos devolverá lo siguiente:
 
 Para comprobar el info.php usaremos *localhost/info.php*. Nos devolverá lo siguiente:
 
-
+![](imagenes/info.png)
