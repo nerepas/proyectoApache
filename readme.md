@@ -38,7 +38,7 @@ Utilizaremos el comando *docker-compose up*. Con esto, crearemos nuestro contene
 Para comprobar que el index.html y el info.php funcionan correctamente nos iremos a nuestro navegador y utilizaremos las siguientes rutas.
 Para comprobar el index.html usaremos *localhost*. Nos devolverá lo siguiente:
 
-!(https://github.com/nerepas/proyectoApache/blob/main/Captura%20desde%202022-11-03%2015-47-20.png)
+![](imagenes/index.png)
 
 Para comprobar el info.php usaremos *localhost/info.php*. Nos devolverá lo siguiente:
 
