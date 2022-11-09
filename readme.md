@@ -137,8 +137,10 @@ Paramos y arrancamos de nuevo el contenedor para que se apliquen todos los cambi
 Para comprobar que funciona nos iremos al navegador y escribiremos lo siguiente.
 En caso del sitio1: localhost
 Nos mostrará lo siguiente:
+
 ![](imagenes/indexsitio1.png)
 
 En el caso del sitio2: localhost:8000
 Nos mostrará lo siguiente:
+
 ![](imagenes/indexsitio2.png)
