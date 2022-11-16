@@ -1,6 +1,6 @@
-zone "asircastelao.com." {
+zone "fabulas.com." {
         type master;
-        file "/var/lib/bind/db.asircastelao.com";
+        file "/var/lib/bind/db.fabulas.com";
         allow-query {
             any;
         };

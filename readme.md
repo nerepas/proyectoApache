@@ -188,9 +188,9 @@ include "/etc/bind/named.conf.local";
 El segundo llamado *named.conf.local* donde incluiremos lo siguiente:
 
 ~~~
-zone "asircastelao.com." {
+zone "fabulas.com." {
         type master;
-        file "/var/lib/bind/db.asircastelao.com";
+        file "/var/lib/bind/db.fabulas.com";
         allow-query {
             any;
         };
@@ -214,19 +214,19 @@ options {
 };
 ~~~
 
-En la carpeta zonas creamos un fichero llamado *db.asircastelao.com* donde incluiremos lo siguiente:
+En la carpeta zonas creamos un fichero llamado *db.fabulas.com* donde incluiremos lo siguiente:
 
 ~~~
 $TTL    3600
-@       IN      SOA     ns.asircastelao.com. nerea.danielcastelao.org. (
+@       IN      SOA     ns.fabulas.com. nerea.fabulas.org. (
                    2007010401           ; Serial
                          3600           ; Refresh [1h]
                           600           ; Retry   [10m]
                         86400           ; Expire  [1d]
                           600 )         ; Negative Cache TTL [1h]
 ;
-@       IN      NS      ns.asircastelao.com.
-@       IN      MX      10 servidorcorreo.asircastelao.org.
+@       IN      NS      ns.fabulas.com.
+@       IN      MX      10 servidorcorreo.fabulas.org.
 
 ns     IN      A       10.1.0.254
 etch    IN      A       123.123.4.5
@@ -271,12 +271,9 @@ networks:
 Con esto, hacemos un docker-compose up y todos los contenedores (asir_bin9, asir_cliente(alpine) y asir_apache) se levantarán.
 
 ### Comprobación de funcionamiento de DNS
-Haremos click derecho sobre el contenedor Alpine y seleccionamos Inspect. Copiaremos la id del contenedor.
+Haremos click derecho sobre el contenedor Alpine y seleccionamos Attach shell.
 
-En la terminal usaremos el comando:
-*docker exec -it idAlpine sh* usando la id que hemos copiado anteriormente.
-
-A continuación, haremos *ping ns.asircastelao.com* y si todo funciona correctamente, tendremos la comprobación de que el DNS está bien configurado.
+A continuación, haremos *ping ns.fabulas.com* y si todo funciona correctamente, tendremos la comprobación de que el DNS está bien configurado.
 
 Comprobación:
 
