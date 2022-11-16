@@ -87,14 +87,15 @@ echo "Hola desde el sitio2";
 ~~~
 
 Cambiamos el docker-compose y el segundo volumen (ConfApache) lo modificaremos de la forma: 
-
+```
 ./ConfApache 
-
+```
 para que coja nuestra carpeta ConfApache.
 
 También añadiremos en los puertos:
-
+```
 '8000:8000'
+```
 
 Quedará de la siguiente forma:
 ~~~
@@ -273,7 +274,8 @@ Con esto, hacemos un docker-compose up y todos los contenedores (asir_bin9, asir
 Haremos click derecho sobre el contenedor Alpine y seleccionamos Attach shell.
 
 A continuación, haremos ping.
-> ping ns.fabulas.com* 
+> ping ns.fabulas.com
+
 Si todo funciona correctamente, tendremos la comprobación de que el DNS está bien configurado.
 
 Comprobación:
