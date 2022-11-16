@@ -278,7 +278,7 @@ Nos vamos al docker-compose.yml y establecemos la ip de asir_apache:
 ~~~
 networks:
   bind9_subnet:
-    ipv4_address: 10.1.0.254
+    ipv4_address: 10.1.0.253
 ~~~
 
 Modificamos el db.fabulas.com de la siguiente forma:
@@ -303,3 +303,26 @@ maravillosas     IN      CNAME   oscuras
 Volvemos a la shell de alpine y volvemos a probar a hacer ping pero esta vez a oscuras y maravillosas:
 
 ![](imagenes/dominios.png)
+
+Nos vamos a la carpeta de confApache y entramos en sites-available.
+Modificaremos los ficheros 000-default.conf y 002-default.conf.
+
+En 000-default.conf añadiremos la linea:
+
+ServerName oscuras.fabulas.com
+
+
+En 002-default.conf añadiremos la linea:
+
+ServerName maravillosas.fabulas.com
+
+Además, también cambiaremos el puerto del 8000 al 80.
+
+
+Nos iremos al contenedor de Alpine, abrimos una shell y comprobaremos que funciona la configuración anterior.
+
+Comprobación:
+
+![](imagenes/dominiositio1.png)
+
+![](imagenes/dominiositio2.png)
