@@ -3,10 +3,10 @@
 
 ## Estructura
 Para comenzar creamos una carpeta en la que contendremos todo el proyecto.
-En esta crearemos a su vez varias subcarpetas: **confApache**, **confDNS**, **SitioSSL** y **html**.
-Además crearemos un fichero llamado **docker-compose.yml**.
+Crearemos un fichero llamado **docker-compose.yml**.
 
 ## Creación de ficheros  de prueba
+Crearemos la carpeta llamada **html**.
 Dentro de la carpeta html crearemos un fichero llamado **index.html** y otro llamado **info.php**.
 
 En index.html escribiremos lo siguiente:
@@ -36,7 +36,10 @@ ports:
     - ./html:/var/www/html
 ~~~
 
-Utilizaremos el comando *docker-compose up*. Con esto, crearemos nuestro contenedor asir_apache y cargaremos la imagen indicada.
+Utilizaremos el comando:
+> docker-compose up
+
+Con esto, crearemos nuestro contenedor asir_apache y cargaremos la imagen indicada.
 
 ## Prueba de funcionamiento
 Para comprobar que el index.html y el info.php funcionan correctamente nos iremos a nuestro navegador y utilizaremos las siguientes rutas.
@@ -71,10 +74,10 @@ confApache:
 ~~~
 
 A continuación copiaremos todos los ficheros del volumen apache2 en nuestra carpeta ConfApache con el comando:
-*docker cp asir_apache:/etc/apache2 .*
+> docker cp asir_apache:/etc/apache2 
 
 ## Sitios
-Dentro de la carpeta html creamos la carpeta Site1 y Site2. 
+Dentro de la carpeta html creamos la carpeta **Site1** y **Site2**. 
 Movemos el archivo index.html a la carpeta Site1.
 Creamos dentro de la carpeta Site2 un archivo llamado index.php en el que contendremos lo siguiente:
 ~~~
@@ -110,38 +113,39 @@ volumes:
     confApache:
 ~~~
 
-Entramos en la carpeta ConfApache y posteriormente en sites-available y modificaremos el fichero llamado 000-default.conf. 
+Creamos la carpeta **ConfApache** y posteriormente entramos en sites-available y modificaremos el fichero llamado 000-default.conf. 
 Cambiaremos la linea:
-
+```
 DocumentRoot /var/www/html/Site1
-
+```
 Creamos una copia de este fichero en la misma ubicación y lo renombraremos a 002-default.conf.
 
 Cambiamos las siguientes lineas en el fichero:
-
+```
 VirtualHost *:8000
-
+```
+```
 DocumentRoot /var/www/html/Site2
-
+```
 Con el contenedor arrancado hacemos click derecho sobre este y seleccionamos Attach Visual Studio Code. 
 En la nueva ventana abrimos una terminal e introducimos lo siguiente:
 
-*cd /var/www/html/*
-*a2ensite 002-default*
+> cd /var/www/html/
+> a2ensite 002-default
 
 Esto hará que se cree en sites-enable el fichero correspondiente a 002-default.
 
 En el fichero ports.conf añadiremos la linea:
-
+```
 Listen 8000
-
+```
 Esto hará que se pueda escuchar en el puerto del sitio 2.
 
 Borramos en el docker compose las siguientes lineas:
-
+```
 volumes:
     confApache:
-
+```
 Quedará de la siguiente forma:
 ~~~
 version: '3.9'
@@ -162,13 +166,15 @@ Paramos y arrancamos de nuevo el contenedor para que se apliquen todos los cambi
 ## Prueba de funcionamiento de Sitios
 Para comprobar que funciona nos iremos al navegador y escribiremos lo siguiente.
 
-En caso del sitio1: *localhost*
+En caso del sitio1: 
+> localhost
 
 Nos mostrará lo siguiente:
 
 ![](imagenes/indexsitio1.png)
 
-En el caso del sitio2: *localhost:8000*
+En el caso del sitio2: 
+> localhost:8000
 
 Nos mostrará lo siguiente:
 
@@ -266,7 +272,9 @@ Con esto, hacemos un docker-compose up y todos los contenedores (asir_bin9, asir
 ### Comprobación de funcionamiento de DNS
 Haremos click derecho sobre el contenedor Alpine y seleccionamos Attach shell.
 
-A continuación, haremos *ping ns.fabulas.com* y si todo funciona correctamente, tendremos la comprobación de que el DNS está bien configurado.
+A continuación, haremos ping.
+> ping ns.fabulas.com* 
+Si todo funciona correctamente, tendremos la comprobación de que el DNS está bien configurado.
 
 Comprobación:
 
@@ -308,14 +316,14 @@ Nos vamos a la carpeta de confApache y entramos en sites-available.
 Modificaremos los ficheros 000-default.conf y 002-default.conf.
 
 En 000-default.conf añadiremos la linea:
-
+```
 ServerName oscuras.fabulas.com
-
+```
 
 En 002-default.conf añadiremos la linea:
-
+```
 ServerName maravillosas.fabulas.com
-
+```
 Además, también cambiaremos el puerto del 8000 al 80.
 
 
