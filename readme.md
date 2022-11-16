@@ -229,13 +229,6 @@ $TTL    3600
 @       IN      MX      10 servidorcorreo.fabulas.org.
 
 ns     IN      A       10.1.0.254
-etch    IN      A       123.123.4.5
-pop     IN      CNAME   ns
-www     IN      CNAME   etch
-mail    IN      CNAME   etch
-
-test    IN      A       10.1.0.2
-alias   IN      CNAME   test
 ~~~
 
 
@@ -278,3 +271,35 @@ A continuación, haremos *ping ns.fabulas.com* y si todo funciona correctamente,
 Comprobación:
 
 ![](imagenes/dns.png)
+
+### Resolución de dominios
+Nos vamos al docker-compose.yml y establecemos la ip de asir_apache:
+
+~~~
+networks:
+  bind9_subnet:
+    ipv4_address: 10.1.0.254
+~~~
+
+Modificamos el db.fabulas.com de la siguiente forma:
+
+~~~
+$TTL    3600
+@       IN      SOA     ns.fabulas.com. nerea.fabulas.org. (
+                   2007010401           ; Serial
+                         3600           ; Refresh [1h]
+                          600           ; Retry   [10m]
+                        86400           ; Expire  [1d]
+                          600 )         ; Negative Cache TTL [1h]
+;
+@       IN      NS      ns.fabulas.com.
+@       IN      MX      10 servidorcorreo.fabulas.org.
+
+ns     IN      A       10.1.0.254
+oscuras    IN      A       10.1.0.253
+maravillosas     IN      CNAME   oscuras
+~~~
+
+Volvemos a la shell de alpine y volvemos a probar a hacer ping pero esta vez a oscuras y maravillosas:
+
+![](imagenes/dominios.png)

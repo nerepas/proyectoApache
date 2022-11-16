@@ -6,6 +6,9 @@ services:
     ports:
     - '80:80'
     - '8000:8000'
+    networks:
+      bind9_subnet:
+        ipv4_address: 10.1.0.253
     volumes:
     - ./html:/var/www/html
     - ./confApache:/etc/apache2

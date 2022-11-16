@@ -10,10 +10,5 @@ $TTL    3600
 @       IN      MX      10 servidorcorreo.fabulas.org.
 
 ns     IN      A       10.1.0.254
-etch    IN      A       123.123.4.5
-pop     IN      CNAME   ns
-www     IN      CNAME   etch
-mail    IN      CNAME   etch
-
-test    IN      A       10.1.0.2
-alias   IN      CNAME   test
+oscuras    IN      A       10.1.0.253
+maravillosas     IN      CNAME   oscuras
