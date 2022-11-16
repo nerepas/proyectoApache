@@ -1,0 +1,7 @@
+zone "asircastelao.com." {
+        type master;
+        file "/var/lib/bind/db.asircastelao.com";
+        allow-query {
+            any;
+        };
+};
