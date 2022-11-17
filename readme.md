@@ -114,7 +114,7 @@ volumes:
     confApache:
 ~~~
 
-Creamos la carpeta **ConfApache** y posteriormente entramos en sites-available y modificaremos el fichero llamado 000-default.conf. 
+Creamos la carpeta **confApache** y posteriormente entramos en sites-available y modificaremos el fichero llamado 000-default.conf. 
 Cambiaremos la linea:
 ```
 DocumentRoot /var/www/html/Site1
@@ -381,9 +381,90 @@ Posteriormente, para leer el fichero patata.html que el DirectoryIndex nos ha es
 
 > cat index.html
 
+Haremos lo mismo en el caso del sitio2.
 
 Comprobación:
 
 ![](imagenes/patata1.png)
 
 ![](imagenes/patata2.png)
+
+
+## SSL
+
+Primeramente debemos instalar ssl.
+Para ello usaremos los comandos:
+
+> apt-get update
+
+> apt-get install apache2 openssl
+
+
+Posteriormente, abriremos una terminal asociada a asir_apache e introducimos los comandos:
+
+> a2enmod ssl
+
+> a2enmod rewrite
+
+
+Nos ubicamos en el fichero apache2.conf y añadimos lo siguiente al fichero:
+~~~
+<Directory /var/www/html>
+  AllowOverride All
+</Directory>
+~~~
+
+Dentro de la carpeta html creamos la carpeta **SitioSSL**.
+En esta creamos un index.html que contenga:
+~~~
+<h1>hola desde el sitio ssl</h1>
+~~~
+
+Creamos una clave privada y el certificado de sitio web con el comando:
+
+> openssl req -new -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out apache-certificate.crt -keyout apache.key
+
+
+Introducimos los datos que nos piden para poder crear la clave.
+
+La carpeta SitioSSL deberá contener los archivos apache-certificate.crt y apache.key.
+
+
+Nos dirigimos a sites-available y entramos al fichero default-ssl.conf y lo modificaremos con lo siguiente:
+~~~
+<VirtualHost *:443>
+	ServerAdmin webmaster@localhost
+
+	DocumentRoot /var/www/html/SitioSSL
+
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+	SSLEngine on
+
+	SSLCertificateFile	/var/www/html/SitioSSL/apache-certificate.crt
+	SSLCertificateKeyFile /var/www/html/SitioSSL/apache.key
+
+	<FilesMatch "\.(cgi|shtml|phtml|php)$">
+			SSLOptions +StdEnvVars
+	</FilesMatch>
+	<Directory /usr/lib/cgi-bin>
+			SSLOptions +StdEnvVars
+	</Directory>
+</VirtualHost>
+~~~
+
+Entramos en una shell de apache y escribimos:
+
+> a2ensite default-ssl
+
+
+Con esto, el fichero default-ssl.conf que se encuentra en sites-available se replicará a sites-enable.
+
+
+Reiniciamos los contenedores.
+
+
+Abrimos una shell asociada a apache y escribimos el comando:
+
+> wget https://
