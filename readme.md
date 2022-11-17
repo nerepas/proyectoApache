@@ -336,3 +336,54 @@ Comprobación:
 ![](imagenes/dominiositio1.png)
 
 ![](imagenes/dominiositio2.png)
+
+## DirectoryIndex
+
+Para utilizar la directiva DirectoryIndex creamos en la carpeta de Site1 un nuevo fichero al que llamaremos patata.html.
+
+Este contendrá:
+
+~~~
+<h1>Patata</h1>
+~~~
+
+Al igual que hemos hecho en la carpeta Site1, lo hacemos en Site2, esta vez con un fichero llamado patata.php que contendrá:
+
+~~~
+<?php
+echo "Patata desde el sitio2";
+?>
+~~~
+
+Nos vamos a la carpeta sites-available y modificamos los ficheros 000-default.conf y 002-default.conf.
+
+En el archivo 000-default.conf añadimos la etiqueta:
+~~~
+<Directory "/var/www/html/Site1">
+  DirectoryIndex patata.html
+</Directory>
+~~~
+
+En el archivo 002-default.conf lo siguiente:
+~~~
+<Directory "/var/www/html/Site2">
+  DirectoryIndex patata.php
+</Directory>
+~~~
+
+De esta forma, al acceder a los sitios nos encontraremos con el contenido de los ficheros introducidos (patata.html e patata.php) respectivamente.
+
+Para ello, abrimos una terminal del contenedor asir_cliente y escribimos el comando:
+
+> wget oscuras.fabulas.com
+
+Posteriormente, para leer el fichero patata.html que el DirectoryIndex nos ha establecido como fichero principal a mostrar desde el sitio1 usamos el comando:
+
+> cat index.html
+
+
+Comprobación:
+
+![](imagenes/patata1.png)
+
+![](imagenes/patata2.png)
