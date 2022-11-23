@@ -461,3 +461,6 @@ Desde FireFox buscamos: https://10.1.0.253/
 
 Nos debería mostrar el contenido del index.html que creamos en la ruta de html/SitiosSSL.
 
+Comprobación:
+
+![](imagenes/ssl.png)
