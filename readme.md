@@ -457,8 +457,6 @@ Con esto, el fichero default-ssl.conf de sites-available se replicará a sites-e
 
 Reiniciaremos el contenedor de apache.
 
-Abrimos una terminal asociada al cliente y escribimos:
-
 Desde FireFox buscamos: https://10.1.0.253/
 
 Nos debería mostrar el contenido del index.html que creamos en la ruta de html/SitiosSSL.
