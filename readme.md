@@ -404,15 +404,14 @@ Posteriormente, abriremos una terminal asociada a asir_apache e introducimos los
 
 > a2enmod ssl
 
-> a2enmod rewrite
+Crearemos una carpeta llamada certificados en confApache.
+Abrimos una terminal asociada a apache y usamos los siguientes comandos:
 
+> cd /etc/apache2/certificados
 
-Nos ubicamos en el fichero apache2.conf y añadimos lo siguiente al fichero:
-~~~
-<Directory /var/www/html>
-  AllowOverride All
-</Directory>
-~~~
+> openssl req -new -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out apache-certificate.crt -keyout apache.key
+
+Se crearán dos ficheros (apache-certificate.crt y apache.key) dentro de la carpeta certificados.
 
 Dentro de la carpeta html creamos la carpeta **SitioSSL**.
 En esta creamos un index.html que contenga:
@@ -420,18 +419,12 @@ En esta creamos un index.html que contenga:
 <h1>hola desde el sitio ssl</h1>
 ~~~
 
-Creamos una clave privada y el certificado de sitio web con el comando:
-
-> openssl req -new -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out apache-certificate.crt -keyout apache.key
-
-
-Introducimos los datos que nos piden para poder crear la clave.
-
-La carpeta SitioSSL deberá contener los archivos apache-certificate.crt y apache.key.
+En el docker-compose añadir el puerto: - '443:443'
 
 
 Nos dirigimos a sites-available y entramos al fichero default-ssl.conf y lo modificaremos con lo siguiente:
 ~~~
+<IfModule mod_ssl.c>
 <VirtualHost *:443>
 	ServerAdmin webmaster@localhost
 
@@ -442,8 +435,9 @@ Nos dirigimos a sites-available y entramos al fichero default-ssl.conf y lo modi
 
 	SSLEngine on
 
-	SSLCertificateFile	/var/www/html/SitioSSL/apache-certificate.crt
-	SSLCertificateKeyFile /var/www/html/SitioSSL/apache.key
+	SSLCertificateFile	/etc/apache2/certificados/apache-certificate.crt
+	SSLCertificateKeyFile /etc/apache2/certificados/apache.key
+
 
 	<FilesMatch "\.(cgi|shtml|phtml|php)$">
 			SSLOptions +StdEnvVars
@@ -452,6 +446,7 @@ Nos dirigimos a sites-available y entramos al fichero default-ssl.conf y lo modi
 			SSLOptions +StdEnvVars
 	</Directory>
 </VirtualHost>
+</IfModule>
 ~~~
 
 Entramos en una shell de apache y escribimos:
@@ -459,12 +454,11 @@ Entramos en una shell de apache y escribimos:
 > a2ensite default-ssl
 
 
-Con esto, el fichero default-ssl.conf que se encuentra en sites-available se replicará a sites-enable.
+Reiniciaremos el contenedor de apache.
 
+Abrimos una terminal asociada al cliente y escribimos:
 
-Reiniciamos los contenedores.
+Desde FireFox buscamos: https://10.1.0.253/
 
+Nos debería mostrar el contenido del index.html que creamos en la ruta de html/SitiosSSL.
 
-Abrimos una shell asociada a apache y escribimos el comando:
-
-> wget https://
