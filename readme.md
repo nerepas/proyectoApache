@@ -400,7 +400,7 @@ Para ello usaremos los comandos:
 > apt-get install apache2 openssl
 
 
-Posteriormente, abriremos una terminal asociada a asir_apache e introducimos los comandos:
+Posteriormente, abriremos una terminal asociada a asir_apache e introducimos el comando:
 
 > a2enmod ssl
 
@@ -419,7 +419,7 @@ En esta creamos un index.html que contenga:
 <h1>hola desde el sitio ssl</h1>
 ~~~
 
-En el docker-compose añadir el puerto: - '443:443'
+En el docker-compose añadimos el puerto: - '443:443'
 
 
 Nos dirigimos a sites-available y entramos al fichero default-ssl.conf y lo modificaremos con lo siguiente:
@@ -453,6 +453,7 @@ Entramos en una shell de apache y escribimos:
 
 > a2ensite default-ssl
 
+Con esto, el fichero default-ssl.conf de sites-available se replicará a sites-enable.
 
 Reiniciaremos el contenedor de apache.
 
