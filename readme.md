@@ -506,7 +506,7 @@ Nos aseguraremos de que tenemos el mod auth_basic instalado en mods-enable. Si n
 
 Añadiremos en el fichero default-ssl.conf de sites-available lo siguiente:
 ~~~
-<Directory /var/www/html/ssl>
+<Directory /var/www/html/SitioSSL>
 AuthType Basic
 AuthName “Restricted Files”
 AuthUserFile /etc/apache2/pass/contrasinals
@@ -516,7 +516,10 @@ Require user Usuario
 
 Tendremos que arrancar de nuevo el contenedor.
 
-Al buscar localhost en el navegador pedirá autenticación de Usuario con su contraseña.
+Al buscar https://localhost en el navegador pedirá autenticación de Usuario con su contraseña.
+
+Comprobación:
+![](imagenes/wireshark.png)
 
 
 ## MYSQL
