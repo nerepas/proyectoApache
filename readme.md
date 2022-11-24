@@ -404,14 +404,17 @@ Posteriormente, abriremos una terminal asociada a asir_apache e introducimos el 
 
 > a2enmod ssl
 
-Crearemos una carpeta llamada certificados en confApache.
+
+Con esto, en se añadir el fichero ssl.conf y ssl.load a la carpeta de mods-enabled contenida en confApache.
+
+Crearemos una carpeta llamada **certificados** en confApache.
 Abrimos una terminal asociada a apache y usamos los siguientes comandos:
 
 > cd /etc/apache2/certificados
 
 > openssl req -new -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out apache-certificate.crt -keyout apache.key
 
-Se crearán dos ficheros (apache-certificate.crt y apache.key) dentro de la carpeta certificados.
+Se crearán dos ficheros (**apache-certificate.crt** y **apache.key**) dentro de la carpeta certificados.
 
 Dentro de la carpeta html creamos la carpeta **SitioSSL**.
 En esta creamos un index.html que contenga:
@@ -464,3 +467,7 @@ Nos debería mostrar el contenido del index.html que creamos en la ruta de html/
 Comprobación:
 
 ![](imagenes/ssl.png)
+
+
+# WIRESHARK
+
