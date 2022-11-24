@@ -469,5 +469,84 @@ Comprobación:
 ![](imagenes/ssl.png)
 
 
-# WIRESHARK
+## WIRESHARK
 
+Añadiremos en docker-compose.yml el contenedor de wireshark. Esto será dentro de services, es decir, a la altura del apache, el cliente y bind9:
+
+~~~
+wireshark:
+    image: lscr.io/linuxserver/wireshark:latest
+    container_name: wireshark
+    cap_add:
+      - NET_ADMIN
+    security_opt:
+      - seccomp:unconfined #optional
+    network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - /home/asir2a/Escritorio/SRI/proyectoApache/confDNS/config:/etc/bind
+    ports:
+      - 3000:3000 #optional
+    restart: unless-stopped
+~~~
+
+Necesitaremos volver a hacer un docker-compose up para que se descargue la imagen de wireshark y se cree y se levante el contenedor correspondiente.
+
+Crearemos una carpeta llamada **pass** dentro de confApache y una subcarpeta contenida en esta llamada **contrasinals**.
+Dentro de la shell de apache ejecutaremos el comando:
+> htpasswd -c pass/contrasinals Usuario
+
+Nos pedirá crear una contraseña para el usuario.
+
+Nos aseguraremos de que tenemos el mod auth_basic instalado en mods-enable. Si no es así, abriremos una shell asociada a apache y utilizaremos el comando: 
+> a2enmod auth_basic
+
+Añadiremos en el fichero default-ssl.conf de sites-available lo siguiente:
+~~~
+<Directory /var/www/html/ssl>
+AuthType Basic
+AuthName “Restricted Files”
+AuthUserFile /etc/apache2/pass/contrasinals
+Require user Usuario
+</Directory>
+~~~
+
+Tendremos que arrancar de nuevo el contenedor.
+
+Al buscar localhost en el navegador pedirá autenticación de Usuario con su contraseña.
+
+
+## MYSQL
+
+Añadiremos en el docker-compose.yml en services lo siguiente:
+~~~
+ db:
+    image: mysql
+    container_name: asir_db
+    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+    # (this is just an example, not intended to be a production configuration)
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    networks:
+      bind9_subnet:
+        ipv4_address: 10.1.0.251
+  adminer:
+    image: adminer
+    container_name: asir_adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      bind9_subnet:
+~~~
+
+Levantaremos los contenedores y descargaremos la imagen con docker-compose up.
+Buscaremos en el navegador localhost:8080 y ya podremos manejar las bases de datos.
+
+Comprobación:
+![](imagenes/mysql.png)
