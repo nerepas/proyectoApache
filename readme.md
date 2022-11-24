@@ -519,6 +519,7 @@ Tendremos que arrancar de nuevo el contenedor.
 Al buscar https://localhost en el navegador pedirá autenticación de Usuario con su contraseña.
 
 Comprobación:
+
 ![](imagenes/wireshark.png)
 
 
@@ -552,4 +553,5 @@ Levantaremos los contenedores y descargaremos la imagen con docker-compose up.
 Buscaremos en el navegador localhost:8080 y ya podremos manejar las bases de datos.
 
 Comprobación:
+
 ![](imagenes/mysql.png)
