@@ -533,7 +533,6 @@ Añadiremos en el docker-compose.yml en services lo siguiente:
     # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
     # (this is just an example, not intended to be a production configuration)
     command: --default-authentication-plugin=mysql_native_password
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: example
     networks:
@@ -542,7 +541,6 @@ Añadiremos en el docker-compose.yml en services lo siguiente:
   adminer:
     image: adminer
     container_name: asir_adminer
-    restart: always
     ports:
       - 8080:8080
     networks:
