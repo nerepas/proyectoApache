@@ -495,8 +495,10 @@ wireshark:
 
 Necesitaremos volver a hacer un docker-compose up para que se descargue la imagen de wireshark y se cree y se levante el contenedor correspondiente.
 
-Crearemos una carpeta llamada **pass** dentro de confApache y una subcarpeta contenida en esta llamada **contrasinals**.
+Crearemos una carpeta llamada **pass** dentro de confApache y un fichero contenido en esta llamado **contrasinals**.
 Dentro de la shell de apache ejecutaremos el comando:
+> cd /etc/apache2
+
 > htpasswd -c pass/contrasinals Usuario
 
 Nos pedirá crear una contraseña para el usuario.
