@@ -523,6 +523,11 @@ Comprobación:
 ![](imagenes/wireshark.png)
 
 
+Entraríamos con el usuario 'Usuario' y la contraseña especificada, en este caso, 'usuario'.
+
+![](imagenes/wireshark2.png)
+
+
 ## MYSQL
 
 Añadiremos en el docker-compose.yml en services lo siguiente:
@@ -553,3 +558,8 @@ Buscaremos en el navegador localhost:8080 y ya podremos manejar las bases de dat
 Comprobación:
 
 ![](imagenes/mysql.png)
+
+
+Iniciaríamos con usuario 'root' y contraseña la indicada en el docker-compose.yml ('example').
+
+![](imagenes/mysql2.png)
